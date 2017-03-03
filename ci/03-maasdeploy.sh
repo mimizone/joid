@@ -236,10 +236,24 @@ enablesubnetanddhcp(){
     enabledhcp=$2
     space=$3
 
-    SUBNET_PREFIX=${TEMP_CIDR::-5}
+    net=($(ipcalc -b "$1" | awk '
+    /^Broadcast: / { b=$2 }
+    /^Network: / { n=$2 }
+    /^Netmask: / { m=$2 }
+    /^HostMin: / { mn=$2 }
+    /^HostMax: / { mx=$2 }
+    /^Hosts\/Net: / { nb=$2 }
+    END {print b; print n; print m; print mn; print mx; print nb}'))
 
-    IP_RES_RANGE_LOW="$SUBNET_PREFIX.1"
-    IP_RES_RANGE_HIGH="$SUBNET_PREFIX.39"
+    #start from the min IP address
+    SUBNET=($(echo ${net[3]} | awk '{split($1,a,"."); print a[1];print a[2];print a[3];print a[4]}'))
+    SUBNET_PREFIX="${SUBNET[0]}.${SUBNET[1]}.${SUBNET[2]}"
+    #reserve the first 40 addresses
+    IP_RES_RANGE_LOW="${SUBNET_PREFIX}."$((${SUBNET[3]}+1))
+    IP_RES_RANGE_HIGH="${SUBNET_PREFIX}."$((${SUBNET[3]}+39))
+    #reserve addresses for dynamic allocation
+    IP_DYNAMIC_RANGE_LOW="${SUBNET_PREFIX}."$((${SUBNET[3]}+40))
+    IP_DYNAMIC_RANGE_HIGH="${SUBNET_PREFIX}."$((${SUBNET[3]}+150))
 
     API_KEY=`sudo maas-region apikey --username=ubuntu`
     maas login $PROFILE $API_SERVERMAAS $API_KEY
@@ -247,9 +261,6 @@ enablesubnetanddhcp(){
     maas $PROFILE ipranges create type=reserved \
          start_ip=$IP_RES_RANGE_LOW end_ip=$IP_RES_RANGE_HIGH \
          comment='This is a reserved range' || true
-
-    IP_DYNAMIC_RANGE_LOW="$SUBNET_PREFIX.40"
-    IP_DYNAMIC_RANGE_HIGH="$SUBNET_PREFIX.150"
 
     maas $PROFILE ipranges create type=dynamic \
         start_ip=$IP_DYNAMIC_RANGE_LOW end_ip=$IP_DYNAMIC_RANGE_HIGH \
