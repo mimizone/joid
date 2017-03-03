@@ -8,6 +8,7 @@ Parameters:
  -l, --lab      : lab config file
 """
 
+import myipaddr
 from optparse import OptionParser
 from jinja2 import Environment, FileSystemLoader
 from distutils.version import LooseVersion, StrictVersion
@@ -73,6 +74,10 @@ def get_ip_address(ifname):
     )[20:24])
 
 
+
+
+
+
 #
 # Config import
 #
@@ -115,7 +120,12 @@ config['lab']['racks'][0]['ifnamelist'] = ','.join(ifnamelist)
 # Create the jinja2 environment.
 env = Environment(loader=FileSystemLoader(TPL_DIR),
                   trim_blocks=True)
-template = env.get_template('deployconfig.yaml')
+## IPADDRR FILTER FOR JINJA2 template
+## CODE COPIED FROM ANSIBLE
+## https://github.com/drybjed/ansible-ipaddr-filter/blob/master/filter_plugins/ipaddr.py
+env.filters.update(myipaddr.FilterModule().filters())
+
+template = env.get_template('deployconfigOSV.yaml')
 
 # Render the template
 output = template.render(**config)
