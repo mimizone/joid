@@ -125,7 +125,7 @@ env = Environment(loader=FileSystemLoader(TPL_DIR),
 ## https://github.com/drybjed/ansible-ipaddr-filter/blob/master/filter_plugins/ipaddr.py
 env.filters.update(myipaddr.FilterModule().filters())
 
-template = env.get_template('deployconfigOSV.yaml')
+template = env.get_template('deployconfig.yaml')
 
 # Render the template
 output = template.render(**config)
