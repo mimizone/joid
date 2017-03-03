@@ -267,7 +267,7 @@ enablesubnetanddhcp(){
         fi
         #maas $PROFILE subnet update $TEMP_CIDR dns_servers=$MY_NAMESERVER || true
         #below command will enable the interface with internal-api space.
-        SPACEID=$(maas $PROFILE space read internal-api | jq '.id')
+        SPACEID=$(maas $PROFILE space read admin-api | jq '.id')
         maas $PROFILE subnet update $TEMP_CIDR space=$SPACEID || true
         if [ "$enabledhcp" == "true" ]; then
             maas $PROFILE vlan update $FABRIC_ID $VLAN_TAG dhcp_on=True primary_rack=$PRIMARY_RACK_CONTROLLER || true
@@ -278,13 +278,13 @@ enablesubnetanddhcp(){
             maas $PROFILE subnet update $TEMP_CIDR gateway_ip=$MY_GATEWAY || true
         fi
         #below command will enable the interface with data-api space for data network.
-        SPACEID=$(maas $PROFILE space read admin-api | jq '.id')
+        SPACEID=$(maas $PROFILE space read data-api | jq '.id')
         maas $PROFILE subnet update $TEMP_CIDR space=$SPACEID || true
         if [ "$enabledhcp" == "true" ]; then
             maas $PROFILE vlan update $FABRIC_ID $VLAN_TAG dhcp_on=True primary_rack=$PRIMARY_RACK_CONTROLLER || true
         fi
     elif [ "$space" == "public" ]; then
-        MY_GATEWAY=`cat labconfig.json | jq '.opnfv.spaces[] | select(.type=="data")'.public | cut -d \" -f 2 `
+        MY_GATEWAY=`cat labconfig.json | jq '.opnfv.spaces[] | select(.type=="public")'.gateway | cut -d \" -f 2 `
         if ([ $MY_GATEWAY ] && [ "$MY_GATEWAY" != "null" ]); then
             maas $PROFILE subnet update $TEMP_CIDR gateway_ip=$MY_GATEWAY || true
         fi
@@ -295,7 +295,7 @@ enablesubnetanddhcp(){
             maas $PROFILE vlan update $FABRIC_ID $VLAN_TAG dhcp_on=True primary_rack=$PRIMARY_RACK_CONTROLLER || true
         fi
     elif [ "$space" == "storage" ]; then
-        MY_GATEWAY=`cat labconfig.json | jq '.opnfv.spaces[] | select(.type=="data")'.storage | cut -d \" -f 2 `
+        MY_GATEWAY=`cat labconfig.json | jq '.opnfv.spaces[] | select(.type=="storage")'.gateway | cut -d \" -f 2 `
         if ([ $MY_GATEWAY ] && [ "$MY_GATEWAY" != "null" ]); then
             maas $PROFILE subnet update $TEMP_CIDR gateway_ip=$MY_GATEWAY || true
         fi
