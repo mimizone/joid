@@ -7,7 +7,7 @@ lab:
       domain: opnfv.os
       architecture: x86_64
       roles: [compute,storage]
-      tags: [opnfv,osv-ocpfix,bootstrap]
+      tags: [joid,osv-ocpfix,bootstrap]
       nics:
       - ifname: enp9s0
         spaces: [admin]
@@ -24,7 +24,7 @@ lab:
       domain: opnfv.os
       architecture: x86_64
       roles: [network,control]
-      tags: [opnfv,osv-ocpfix]
+      tags: [joid,osv-ocpfix]
       nics:
       - ifname: enp9s0
         spaces: [admin]
@@ -41,7 +41,7 @@ lab:
       domain: opnfv.os
       architecture: x86_64
       roles: [network,control]
-      tags: [opnfv,osv-ocpfix]
+      tags: [joid,osv-ocpfix]
       nics:
       - ifname: enp9s0
         spaces: [admin]
@@ -58,7 +58,7 @@ lab:
       domain: opnfv.os
       architecture: x86_64
       roles: [compute,storage]
-      tags: [opnfv,osv-ocpfix]
+      tags: [joid,osv-ocpfix]
       nics:
       - ifname: enp9s0
         spaces: [admin]
@@ -75,7 +75,7 @@ lab:
       domain: opnfv.os
       architecture: x86_64
       roles: [compute,storage]
-      tags: [opnfv,osv-ocpfix]
+      tags: [joid,osv-ocpfix]
       nics:
       - ifname: enp9s0
         spaces: [admin]
@@ -92,7 +92,7 @@ lab:
       domain: opnfv.os
       architecture: x86_64
       roles: [network,control]
-      tags: [opnfv,osv-ocpfix]
+      tags: [joid,osv-ocpfix]
       nics:
       - ifname: enp9s0
         spaces: [admin]
@@ -109,7 +109,7 @@ lab:
       domain: opnfv.os
       architecture: x86_64
       roles: [compute,storage]
-      tags: [opnfv,osv-ocpfix]
+      tags: [joid,osv-ocpfix]
       nics:
       - ifname: enp9s0
         spaces: [admin]
