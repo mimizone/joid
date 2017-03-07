@@ -1,0 +1,185 @@
+lab:
+  location: orange
+  racks:
+  - rack: pod3
+    nodes:
+    - name: osv16ocp1b
+      domain: opnfv.os
+      architecture: x86_64
+      roles: [compute,storage]
+      tags: [opnfv,osv-ocpfix,bootstrap]
+      nics:
+      - ifname: enp9s0
+        spaces: [admin]
+        mac: ["08:9e:01:ab:fd:6e"]
+      - ifname: ens9
+        spaces: [data,storage]
+        mac: ["00:02:c9:ce:70:7c"]
+      power:
+        type: ipmi
+        address: 172.30.0.137
+        user: admin
+        pass: admin
+    - name: osv16ocp1c
+      domain: opnfv.os
+      architecture: x86_64
+      roles: [network,control]
+      tags: [opnfv,osv-ocpfix]
+      nics:
+      - ifname: enp9s0
+        spaces: [admin]
+        mac: ["08:9e:01:ab:fc:f6"]
+      - ifname: ens9
+        spaces: [storage]
+        mac: ["00:02:c9:ce:7c:16"]
+      power:
+        type: ipmi
+        address: 172.30.0.138
+        user: admin
+        pass: admin
+    - name: osv16ocp2a
+      domain: opnfv.os
+      architecture: x86_64
+      roles: [network,control]
+      tags: [opnfv,osv-ocpfix]
+      nics:
+      - ifname: enp9s0
+        spaces: [admin]
+        mac: ["08:9e:01:ab:fe:12"]
+      - ifname: ens9
+        spaces: [storage]
+        mac: ["00:02:c9:cf:17:44"]
+      power:
+        type: ipmi
+        address: 172.30.0.139
+        user: admin
+        pass: admin
+    - name: osv16ocp2b
+      domain: opnfv.os
+      architecture: x86_64
+      roles: [compute,storage]
+      tags: [opnfv,osv-ocpfix]
+      nics:
+      - ifname: enp9s0
+        spaces: [admin]
+        mac: ["08:9e:01:ab:d2:90"]
+      - ifname: ens9
+        spaces: [data,storage]
+        mac: ["00:02:c9:cf:22:18"]
+      power:
+        type: ipmi
+        address: 172.30.0.140
+        user: admin
+        pass: admin
+    - name: osv16ocp2c
+      domain: opnfv.os
+      architecture: x86_64
+      roles: [compute,storage]
+      tags: [opnfv,osv-ocpfix]
+      nics:
+      - ifname: enp9s0
+        spaces: [admin]
+        mac: ["08:9e:01:ab:fd:82"]
+      - ifname: ens9
+        spaces: [data,storage]
+        mac: ["00:02:c9:d0:69:f6"]
+      power:
+        type: ipmi
+        address: 172.30.0.141
+        user: admin
+        pass: admin
+    - name: osv16ocp3a
+      domain: opnfv.os
+      architecture: x86_64
+      roles: [network,control]
+      tags: [opnfv,osv-ocpfix]
+      nics:
+      - ifname: enp9s0
+        spaces: [admin]
+        mac: ["08:9e:01:ab:fd:70"]
+      - ifname: ens9
+        spaces: [storage]
+        mac: ["00:02:c9:cf:1c:1e"]
+      power:
+        type: ipmi
+        address: 172.30.0.142
+        user: admin
+        pass: admin
+    - name: osv16ocp3b
+      domain: opnfv.os
+      architecture: x86_64
+      roles: [compute,storage]
+      tags: [opnfv,osv-ocpfix]
+      nics:
+      - ifname: enp9s0
+        spaces: [admin]
+        mac: ["08:9e:01:ab:fe:24"]
+      - ifname: ens9
+        spaces: [data,storage]
+        mac: ["00:02:c9:ce:6b:fc"]
+      power:
+        type: ipmi
+        address: 172.30.0.143
+        user: admin
+        pass: admin
+    - name: osv16ocp3c
+      domain: opnfv.os
+      architecture: x86_64
+      roles: []
+      tags: []
+      nics:
+      - ifname: enp9s0
+        spaces: [admin]
+        mac: ["08:9e:01:ab:fe:14"]
+      - ifname: ens9
+        spaces: []
+        mac: ["00:02:c9:cf:1b:c4"]
+      power:
+        type: ipmi
+        address: 172.30.0.144
+        user: admin
+        pass: admin
+    floating-ip-range: 172.30.112.130,172.30.112.140,172.30.112.128/25
+    ext-port: "ens9.2006"
+    dns: 172.30.4.3
+    osdomainname: opnfv.os
+opnfv:
+    release: d
+    distro: xenial
+    type: nonha
+    openstack: liberty
+    sdncontroller:
+    - type: odl
+    storage:
+    - type: ceph
+      disk: /srv
+    feature: odl_l2
+    spaces:
+    - type: admin
+      bridge: brAdm
+      cidr: 172.30.72.128/25
+      gateway: 172.30.72.129
+      vlan:
+    - type: public
+      bridge: brPublic
+      cidr: 172.30.80.128/25
+      gateway: 172.30.80.129
+      vlan:
+    - type: internal
+      bridge: brInt
+      cidr: 172.30.88.128/25
+      gateway: 172.30.88.129
+      vlan:
+    - type: storage
+      bridge: brStorage
+      cidr: 172.30.96.128/25
+      gateway: 172.30.96.129
+      vlan:
+    - type: external
+      bridge: brExt
+      cidr: 172.30.112.128/25
+      vlan:
+    - type: data
+      bridge: brData
+      cidr: 172.30.120.128/25
+      vlan:
