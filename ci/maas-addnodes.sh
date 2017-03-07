@@ -108,15 +108,14 @@ fi
 
 createmachine()
 {
-	echo "create machine $mindex"
-	index=$1
-	NODE_NAME=$(echo ${labconfig} | jq -r ".lab.racks[0].nodes[$index].name")
-	POWER_TYPE=$(echo ${labconfig} | jq -r ".lab.racks[0].nodes[$index].power.type")
-	POWER_IP=$(echo ${labconfig} | jq -r ".lab.racks[0].nodes[$index].power.address")
-	POWER_USER=$(echo ${labconfig} | jq -r ".lab.racks[0].nodes[$index].power.user")
-	POWER_PASS=$(echo ${labconfig} | jq -r ".lab.racks[0].nodes[$index].power.pass")
-	MAC_ADDRESS=$(echo ${labconfig} | jq -r ".lab.racks[0].nodes[$index].nics[] | select(.spaces[]==\"admin\").mac[0]")
-	DOMAIN=$(echo ${labconfig} | jq -r ".lab.racks[0].nodes[$index].domain")
+	echo "create machine $1"
+	NODE_NAME=$(echo ${labconfig} | jq -r ".lab.racks[0].nodes[$1].name")
+	POWER_TYPE=$(echo ${labconfig} | jq -r ".lab.racks[0].nodes[$1].power.type")
+	POWER_IP=$(echo ${labconfig} | jq -r ".lab.racks[0].nodes[$1].power.address")
+	POWER_USER=$(echo ${labconfig} | jq -r ".lab.racks[0].nodes[$1].power.user")
+	POWER_PASS=$(echo ${labconfig} | jq -r ".lab.racks[0].nodes[$1].power.pass")
+	MAC_ADDRESS=$(echo ${labconfig} | jq -r ".lab.racks[0].nodes[$1].nics[] | select(.spaces[]==\"admin\").mac[0]")
+	DOMAIN=$(echo ${labconfig} | jq -r ".lab.racks[0].nodes[$1].domain")
 	DOMAIN_ID=$(maas $PROFILE domains read | jq -r ".[] | select(.name==\"$DOMAIN\") | .id")
 
   # echo $NODE_NAME
